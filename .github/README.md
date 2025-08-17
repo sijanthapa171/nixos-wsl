@@ -14,7 +14,7 @@ in other package managers.
 
 `unstable-packages` is for packages that you want to always keep at the latest
 released versions, and `stable-packages` is for packages that you want to track
-with the current release of NixOS (currently 24.05).
+with the current release of NixOS (currently 24.11).
 
 If you want to update the versions of the available `unstable-packages`, run
 `nix flake update` to pull the latest version of the Nixpkgs repository and
@@ -33,22 +33,22 @@ customize to your liking both by removing and adding tools that you prefer.
 - The default editor is [nixvim](https://github.com/sijanthapa171/nixvim)
 - `win32yank` is used to ensure perfect bi-directional copying and pasting to
   and from Windows GUI applications and LunarVim running in WSL
-- The default shell is `fish`
+- The default shell is `zsh` (migrated from fish)
 - Native `docker` (ie. Linux, not Windows) is enabled by default
 - The prompt is [Starship](https://starship.rs/)
 - [`fzf`](https://github.com/junegunn/fzf),
   [`lsd`](https://github.com/lsd-rs/lsd),
   [`zoxide`](https://github.com/ajeetdsouza/zoxide), and
-  [`broot`](https://github.com/Canop/broot) are integrated into `fish` by
+  [`broot`](https://github.com/Canop/broot) are integrated into `zsh` by
   default
   - These can all be disabled easily by setting `enable = false` in
     [home.nix](home.nix), or just removing the lines all together
-- [`direnv`](https://github.com/direnv/direnv) is integrated into `fish` by
+- [`direnv`](https://github.com/direnv/direnv) is integrated into `zsh` by
   default
 - `git` config is generated in [home.nix](home.nix) with options provided to
   enable private HTTPS clones with secret tokens
-- `fish` config is generated in [home.nix](home.nix) and includes git aliases,
-  useful WSL aliases
+- `zsh` config is generated in [home.nix](home.nix) and includes git aliases,
+  useful WSL aliases, and enhanced functionality with autosuggestions and syntax highlighting
 
 ### win32yank
 
@@ -58,9 +58,9 @@ install win32yank` or compiling it from source, and then adding it to your `$PAT
 
 ```nix
 {
-    programs.fish = {
-      interactiveShellInit = ''
-        fish_add_path --append /mnt/c/Users/<Your Windows Username>/scoop/apps/win32yank/0.1.1
+    programs.zsh = {
+      initExtra = ''
+        export PATH="$PATH:/mnt/c/Users/<Your Windows Username>/scoop/apps/win32yank/0.1.1"
       '';
     };
 }
@@ -142,9 +142,33 @@ this project uses a flat layout without any nesting or modularization.
     command which requires a binary not in the `$PATH`
 - `wsl.nix` is where the VM is configured
   - The hostname is set here
-  - The default shell is set here
+  - The default shell is set here (currently zsh)
   - User groups are set here
   - WSL configuration options are set here
   - NixOS options are set here
 - `home.nix` is where packages, dotfiles, terminal tools, environment variables
   and aliases are configured
+
+
+## Shell Migration: Fish → Zsh
+
+This configuration has been migrated from fish shell to zsh to provide:
+- Enhanced compatibility with more tools and scripts
+- Better integration with home-manager
+- Improved plugin ecosystem
+- All existing functionality preserved
+
+### What's Included in Zsh Configuration:
+- **Autosuggestions**: Command suggestions as you type
+- **Syntax Highlighting**: Colored syntax in the terminal
+- **Git Integration**: All your existing git aliases and shortcuts
+- **Navigation Shortcuts**: Quick directory navigation (`..`, `...`, etc.)
+- **WSL Integration**: Windows clipboard and explorer integration
+- **Nix Integration**: Seamless NixOS development experience
+- **Starship Prompt**: Modern, customizable prompt system
+
+### Key Features:
+- **Aliases**: All your fish abbreviations converted to zsh aliases
+- **Functions**: Custom functions like `take`, `ttake`, `posix-source`
+- **Tool Integration**: fzf, zoxide, broot, direnv all configured for zsh
+- **Performance**: Optimized startup with minimal configuration overhead
