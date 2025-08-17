@@ -32,6 +32,7 @@
     wget
     zip
     lazygit
+    btop
   ];
 
   stable-packages = with pkgs; [
@@ -42,16 +43,7 @@
     inputs.nixvim.packages.${pkgs.system}.default
 
     # key tools
-    gh # for bootstrapping
-    just
     nitch
-
-    # core languages
-    rustup
-
-    # rust stuff
-    cargo-cache
-    cargo-expand
 
     # local dev stuf
     mkcert
@@ -219,6 +211,7 @@ in {
         gsl = "git stash list";
         lg = "lazygit";
         
+        
         # Other aliases
         nv = "nvim";
         lvim = "nvim";
@@ -227,7 +220,8 @@ in {
         explorer = "/mnt/c/Windows/explorer.exe";
         
         # Nix shortcuts
-        gc = "nix-collect-garbage --delete-old";
+        gc = "sudo nix-collect-garbage -d";
+        sysup = "sudo nixos-rebuild switch --flake ~/configuration";
         
         # To use code as the command, uncomment the line below. Be sure to replace [my-user] with your username.
         # If your code binary is located elsewhere, adjust the path as needed.
