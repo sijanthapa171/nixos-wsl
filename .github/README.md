@@ -149,26 +149,3 @@ this project uses a flat layout without any nesting or modularization.
 - `home.nix` is where packages, dotfiles, terminal tools, environment variables
   and aliases are configured
 
-
-## Shell Migration: Fish → Zsh
-
-This configuration has been migrated from fish shell to zsh to provide:
-- Enhanced compatibility with more tools and scripts
-- Better integration with home-manager
-- Improved plugin ecosystem
-- All existing functionality preserved
-
-### What's Included in Zsh Configuration:
-- **Autosuggestions**: Command suggestions as you type
-- **Syntax Highlighting**: Colored syntax in the terminal
-- **Git Integration**: All your existing git aliases and shortcuts
-- **Navigation Shortcuts**: Quick directory navigation (`..`, `...`, etc.)
-- **WSL Integration**: Windows clipboard and explorer integration
-- **Nix Integration**: Seamless NixOS development experience
-- **Starship Prompt**: Modern, customizable prompt system
-
-### Key Features:
-- **Aliases**: All your fish abbreviations converted to zsh aliases
-- **Functions**: Custom functions like `take`, `ttake`, `posix-source`
-- **Tool Integration**: fzf, zoxide, broot, direnv all configured for zsh
-- **Performance**: Optimized startup with minimal configuration overhead
