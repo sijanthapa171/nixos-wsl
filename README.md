@@ -1,4 +1,4 @@
-# nixos-wsl-starter
+# nixos-wsl
 
 This repository is intended to be a sane, batteries-included starter template
 for running a [nixvim](https://github.com/sijanthapa171/nixvim)-powered NixOS
