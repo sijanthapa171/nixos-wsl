@@ -85,7 +85,7 @@ in {
 
     sessionVariables.EDITOR = "nvim";
     # FIXME: set your preferred $SHELL
-    sessionVariables.SHELL = "/etc/profiles/per-user/${username}/bin/fish";
+    sessionVariables.SHELL = "/etc/profiles/per-user/${username}/bin/zsh";
   };
 
   home.packages =
@@ -101,7 +101,7 @@ in {
   programs = {
     home-manager.enable = true;
     nix-index.enable = true;
-    nix-index.enableFishIntegration = true;
+    nix-index.enableZshIntegration = true;
     nix-index-database.comma.enable = true;
 
     # FIXME: disable this if you don't want to use the starship prompt
@@ -122,14 +122,14 @@ in {
 
     # FIXME: disable whatever you don't want
     fzf.enable = true;
-    fzf.enableFishIntegration = true;
+    fzf.enableZshIntegration = true;
     lsd.enable = true;
     lsd.enableAliases = true;
     zoxide.enable = true;
-    zoxide.enableFishIntegration = true;
+    zoxide.enableZshIntegration = true;
     zoxide.options = ["--cmd cd"];
     broot.enable = true;
-    broot.enableFishIntegration = true;
+    broot.enableZshIntegration = true;
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
 
@@ -167,87 +167,93 @@ in {
       };
     };
 
-    # FIXME: This is my fish config - you can fiddle with it if you want
-    fish = {
+    # FIXME: This is my zsh config migrated from fish - you can fiddle with it if you want
+    zsh = {
       enable = true;
-      # open niitch when i start my computer
+      autosuggestion.enable = true;
+      enableCompletion = true;
+      enableVteIntegration = true;
+      
+      # open nitch when i start my computer
       # fish_add_path --append /mnt/c/Users/<Your Windows Username>/scoop/apps/win32yank/0.1.1
-      interactiveShellInit = ''
+      initExtra = ''
+        # Run nitch on startup
         nitch
-          ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
-
-          ${pkgs.lib.strings.fileContents (pkgs.fetchFromGitHub {
-            owner = "rebelot";
-            repo = "kanagawa.nvim";
-            rev = "de7fb5f5de25ab45ec6039e33c80aeecc891dd92";
-            sha256 = "sha256-f/CUR0vhMJ1sZgztmVTPvmsAgp0kjFov843Mabdzvqo=";
-          }
-          + "/extras/kanagawa.fish")}
-
-          set -U fish_greeting
+        
+        # Source any-nix-shell for nix integration
+        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source
+        
+        # Kanagawa theme is not available for zsh, using starship instead
+        
+        # Disable zsh greeting
+        unsetopt PROMPT_SP
       '';
-      functions = {
-        refresh = "source $HOME/.config/fish/config.fish";
-        take = ''mkdir -p -- "$1" && cd -- "$1"'';
+      
+      shellAliases = {
+        # Utility functions
+        refresh = "source $HOME/.zshrc";
+        take = "mkdir -p \"$1\" && cd \"$1\"";
         ttake = "cd $(mktemp -d)";
         show_path = "echo $PATH | tr ' ' '\n'";
-        posix-source = ''
-          for i in (cat $argv)
-            set arr (echo $i |tr = \n)
-            set -gx $arr[1] $arr[2]
-          end
-        '';
-      };
-      shellAbbrs =
-        {
-          gc = "nix-collect-garbage --delete-old";
-        }
-        # navigation shortcuts
-        // {
-          ".." = "cd ..";
-          "..." = "cd ../../";
-          "...." = "cd ../../../";
-          "....." = "cd ../../../../";
-        }
-        # git shortcuts
-        // {
-          gapa = "git add --patch";
-          grpa = "git reset --patch";
-          gst = "git status";
-          gdh = "git diff HEAD";
-          gp = "git push";
-          gph = "git push -u origin HEAD";
-          gco = "git checkout";
-          gcob = "git checkout -b";
-          gcm = "git checkout master";
-          gcd = "git checkout develop";
-          gsp = "git stash push -m";
-          gsa = "git stash apply stash^{/";
-          gsl = "git stash list";
-        };
-      shellAliases = {
+        
+        # Navigation shortcuts
+        ".." = "cd ..";
+        "..." = "cd ../../";
+        "...." = "cd ../../../";
+        "....." = "cd ../../../../";
+        
+        # Git shortcuts
+        gapa = "git add --patch";
+        grpa = "git reset --patch";
+        gst = "git status";
+        gdh = "git diff HEAD";
+        gp = "git push";
+        gph = "git push -u origin HEAD";
+        gco = "git checkout";
+        gcob = "git checkout -b";
+        gcm = "git checkout master";
+        gcd = "git checkout develop";
+        gsp = "git stash push -m";
+        gsa = "git stash apply stash^{/";
+        gsl = "git stash list";
+        
+        # Other aliases
         nv = "nvim";
         lvim = "nvim";
         pbcopy = "/mnt/c/Windows/System32/clip.exe";
         pbpaste = "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -command 'Get-Clipboard'";
         explorer = "/mnt/c/Windows/explorer.exe";
-
+        
+        # Nix shortcuts
+        gc = "nix-collect-garbage --delete-old";
+        
         # To use code as the command, uncomment the line below. Be sure to replace [my-user] with your username.
         # If your code binary is located elsewhere, adjust the path as needed.
         # code = "/mnt/c/Users/[my-user]/AppData/Local/Programs/'Microsoft VS Code'/bin/code";
       };
+      
+      # Zsh functions (equivalent to fish functions)
+      initExtraFirst = ''
+        # Function to source posix-style environment files
+        posix-source() {
+          while IFS= read -r line; do
+            if [[ $line =~ ^[[:space:]]*# ]] || [[ -z $line ]]; then
+              continue
+            fi
+            export "$line"
+          done < "$1"
+        }
+      '';
+      
+      # Zsh plugins - using home-manager's built-in plugins
       plugins = [
         {
-          inherit (pkgs.fishPlugins.autopair) src;
-          name = "autopair";
+          name = "zsh-autosuggestions";
+          src = pkgs.zsh-autosuggestions;
         }
         {
-          inherit (pkgs.fishPlugins.done) src;
-          name = "done";
-        }
-        {
-          inherit (pkgs.fishPlugins.sponge) src;
-          name = "sponge";
+          name = "zsh-syntax-highlighting";
+          src = pkgs.zsh-syntax-highlighting;
         }
       ];
     };
