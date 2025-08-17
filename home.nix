@@ -31,6 +31,7 @@
     unzip
     wget
     zip
+    lazygit
   ];
 
   stable-packages = with pkgs; [
@@ -181,7 +182,7 @@ in {
         nitch
         
         # Source any-nix-shell for nix integration
-        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source
+        # ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source
         
         # Kanagawa theme is not available for zsh, using starship instead
         
@@ -216,6 +217,7 @@ in {
         gsp = "git stash push -m";
         gsa = "git stash apply stash^{/";
         gsl = "git stash list";
+        lg = "lazygit";
         
         # Other aliases
         nv = "nvim";
