@@ -222,7 +222,8 @@ in {
         # Nix shortcuts
         gc = "sudo nix-collect-garbage -d";
         sysup = "sudo nixos-rebuild switch --flake ~/configuration";
-        
+        n = "nitch";
+
         # To use code as the command, uncomment the line below. Be sure to replace [my-user] with your username.
         # If your code binary is located elsewhere, adjust the path as needed.
         # code = "/mnt/c/Users/[my-user]/AppData/Local/Programs/'Microsoft VS Code'/bin/code";
