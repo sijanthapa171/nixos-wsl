@@ -391,7 +391,8 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
-        "nur": "nur"
+        "nur": "nur",
+        "trok": "trok"
       }
     },
     "systems": {
@@ -421,6 +422,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "trok": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1751654275,
+        "narHash": "sha256-hAJ4PzlbdkYefNSfGBsF+PKfRCzlIHe2pXeGPJfdM/Q=",
+        "owner": "tuxdotrs",
+        "repo": "trok",
+        "rev": "28126688a64e82c94100ff17a53835bf2831222f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tuxdotrs",
+        "repo": "trok",
         "type": "github"
       }
     }

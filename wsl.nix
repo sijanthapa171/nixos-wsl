@@ -67,6 +67,11 @@
     autoPrune.enable = true;
   };
 
+  # Packages from flake inputs
+  environment.systemPackages = [
+    inputs.trok.packages.${pkgs.system}.default
+  ];
+
   # FIXME: uncomment the next block to make vscode running in Windows "just work" with NixOS on WSL
   # solution adapted from: https://github.com/K900/vscode-remote-workaround
   # more information: https://github.com/nix-community/NixOS-WSL/issues/238 and https://github.com/nix-community/NixOS-WSL/issues/294

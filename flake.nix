@@ -17,6 +17,9 @@
 
   inputs.nixvim.url = "github:sijanthapa171/nixvim";
 
+  inputs.trok.url = "github:tuxdotrs/trok";
+  inputs.trok.inputs.nixpkgs.follows = "nixpkgs";
+
   outputs = inputs:
     with inputs; let
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets.json");
