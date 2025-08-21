@@ -70,6 +70,8 @@
   # Packages from flake inputs
   environment.systemPackages = [
     inputs.trok.packages.${pkgs.system}.default
+    pkgs.nodejs
+    pkgs.pnpm
   ];
 
   # FIXME: uncomment the next block to make vscode running in Windows "just work" with NixOS on WSL
