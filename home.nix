@@ -223,6 +223,8 @@ in {
         gc = "sudo nix-collect-garbage -d";
         sysup = "sudo nixos-rebuild switch --flake ~/configuration";
         n = "nitch";
+        md = "mkdir";
+        cls = "clear";
 
         # To use code as the command, uncomment the line below. Be sure to replace [my-user] with your username.
         # If your code binary is located elsewhere, adjust the path as needed.
