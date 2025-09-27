@@ -22,7 +22,7 @@ tweaks.
 
 
 - Get the [latest
-  release](https://github.com/sijanthapa171/nixos-wsl.git)
+  release](https://github.com/nix-community/NixOS-WSL/releases)
 - Install it (tweak the command to your desired paths):
 
 ```powershell
