@@ -13,7 +13,7 @@
     bottom
     coreutils
     curl
-    du-dust
+    dust
     fd
     findutils
     fx
