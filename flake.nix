@@ -34,8 +34,15 @@
           ];
         };
 
+        unstablePkgs = import nixpkgs-unstable {
+          inherit system config;
+        };
+
         overlays = [
           nur.overlays.default
+          (_final: _prev: {
+            unstable = unstablePkgs;
+          })
         ];
       });
 
