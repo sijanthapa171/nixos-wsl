@@ -34,14 +34,16 @@
           ];
         };
 
+        unstablePkgs = import nixpkgs-unstable {
+          inherit system config;
+        };
+
         overlays = [
           nur.overlays.default
 
           (_final: prev: {
-            unstable = import nixpkgs-unstable {
-              inherit (prev) system;
-              inherit config;
-            };
+            unstable = unstablePkgs;
+            rustPlatform = unstablePkgs.rustPlatform;
           })
         ];
       });
