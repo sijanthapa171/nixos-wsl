@@ -117,7 +117,7 @@
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
 
-    package = pkgs.nixVersions.stable;
+    package = pkgs.lix;
     extraOptions = ''experimental-features = nix-command flakes'';
 
     gc = {
