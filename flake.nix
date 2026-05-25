@@ -42,6 +42,10 @@
           nur.overlays.default
           (_final: _prev: {
             unstable = unstablePkgs;
+            callPackage = path: args:
+              _prev.callPackage path (args // {
+                rustPlatform = unstablePkgs.rustPlatform;
+              });
           })
         ];
       });
